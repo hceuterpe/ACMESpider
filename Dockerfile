@@ -1,7 +1,7 @@
 ARG ALPINE_IMAGE=alpine:3.22
 
 # Builder
-FROM golang:1.21 AS builder
+FROM --platform=linux/arm64 golang:1.21 AS builder
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ COPY . .
 RUN go build -o acmespider cmd/main.go
 
 # Runtime
-FROM ${ALPINE_IMAGE} AS runtime
+FROM --platform=linux/arm64 ${ALPINE_IMAGE} AS runtime
 #FROM redhat/ubi9-minimal AS runtime
 
 WORKDIR /app
