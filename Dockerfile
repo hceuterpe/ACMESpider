@@ -1,3 +1,5 @@
+ARG ALPINE_IMAGE=alpine:3.22
+
 # Builder
 FROM golang:1.21 AS builder
 
@@ -9,7 +11,8 @@ COPY . .
 RUN go build -o acmespider cmd/main.go
 
 # Runtime
-FROM redhat/ubi9-minimal AS runtime
+FROM ${ALPINE_IMAGE} AS runtime
+#FROM redhat/ubi9-minimal AS runtime
 
 WORKDIR /app
 COPY --from=builder /app/acmespider .
